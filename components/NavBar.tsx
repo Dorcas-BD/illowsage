@@ -77,15 +77,26 @@ const Navbar = () => {
         )}
         <IconButton
           size={"lg"}
+          icon={<Box as={LuShoppingCart} boxSize={8} />}
+          aria-label={"Shopping Cart"}
+          display={{ md: "none" }}
+          bg={"#F8E1E7"}
+          opacity={0.7}
+          _hover={{ bg: "#F8E1E7" }}
+        />
+        <IconButton
+          size={"md"}
           icon={
-            isOpen ? <CloseIcon boxSize={6} /> : <HamburgerIcon boxSize={7} />
+            isOpen ? (
+              <CloseIcon boxSize={6} color={"#ffffff"} />
+            ) : (
+              <HamburgerIcon boxSize={7} color={"#ffffff"} />
+            )
           }
           aria-label={"Open Menu"}
           display={{ md: "none" }}
           onClick={isOpen ? onClose : onOpen}
-          bg={"#F8E1E7"}
-          p={4}
-          _hover={{ bg: "#F8E1E7" }}
+          bg={"#992442"}
         />
       </Flex>
 

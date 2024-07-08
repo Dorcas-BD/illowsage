@@ -1,8 +1,6 @@
-// components/ProductBox.tsx
-
 "use client";
 
-import { Box, Flex, Text, useBreakpointValue } from "@chakra-ui/react";
+import { Box, Flex, Text, keyframes } from "@chakra-ui/react";
 import React from "react";
 
 const ProductBox = () => {
@@ -18,11 +16,12 @@ const ProductBox = () => {
     "Serums",
   ];
 
-  const visibleItems =
-    useBreakpointValue({
-      base: items.slice(0, 4),
-      md: items,
-    }) || items.slice(0, 4);
+  const scrollingAnimation = keyframes`
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  `;
+
+  const itemWidth = "25%";
 
   return (
     <Box
@@ -34,17 +33,28 @@ const ProductBox = () => {
       borderRadius={12}
       opacity={0.7}
       background="linear-gradient(90deg, #FCF0F3 0%, #DDC3A0)"
-      display="flex"
-      alignItems="center"
-      justifyContent="space-around"
+      overflow="hidden"
+      whiteSpace="nowrap"
+      position="relative"
     >
-      <Flex width="100%" justifyContent="space-around">
-        {visibleItems.map((item, index) => (
+      <Flex
+        as="div"
+        width="200%"
+        justifyContent="space-around"
+        alignItems="center"
+        animation={`${scrollingAnimation} 30s linear infinite`}
+      >
+        {[...items, ...items].map((item, index) => (
           <Text
             key={index}
             fontSize={{ base: "sm", md: "lg" }}
             color="#4F4F4F"
             opacity={0.5}
+            mx={2}
+            display="inline-block"
+            whiteSpace="nowrap"
+            width={itemWidth}
+            textAlign="center"
           >
             {item}
           </Text>

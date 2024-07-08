@@ -6,7 +6,7 @@ import ChakraProviders from "@/lib/providers/ChakraProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Illowsage",
+  title: "Willowsage",
   description: "Glow with confidence!",
 };
 

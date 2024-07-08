@@ -5,7 +5,7 @@ import Image from "next/image";
 import React from "react";
 
 const WillowPage = () => {
-  const productImageWidth = useBreakpointValue({ base: 172, md: 597 });
+  const productImageWidth = useBreakpointValue({ base: 152, md: 597 });
   const productImageHeight = useBreakpointValue({ base: 120, md: 418 });
   const imageWidth = useBreakpointValue({ base: 688, md: 722 });
   const imageHeight = useBreakpointValue({ base: 277, md: 481 });
@@ -18,9 +18,13 @@ const WillowPage = () => {
       mx={{ base: "1.5rem", md: "6rem" }}
       mt={20}
       borderRadius={12}
-      //   position={{ base: "relative", md: "relative" }}
     >
-      <Box position={{ base: "absolute", md: "relative" }} m={4}>
+      <Box
+        position={{ base: "absolute", md: "relative" }}
+        m={4}
+        zIndex={8}
+        mt={{ base: 16, md: 3 }}
+      >
         <Box position={"relative"} top={{ base: 0, md: 20 }}>
           <Text
             fontSize={{ base: "20px", md: "72px" }}

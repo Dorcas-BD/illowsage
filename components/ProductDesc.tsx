@@ -55,7 +55,7 @@ const ProductDesc = () => {
 
   const [isOpen, setIsOpen] = useState(new Array(moreItems.length).fill(false));
 
-  const toggleItems = (index) => {
+  const toggleItems = (index: number) => {
     const newOpenState = isOpen.map((state, i) =>
       i === index ? !state : false
     );

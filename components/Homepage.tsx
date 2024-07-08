@@ -7,9 +7,8 @@ import SpecialDeal from "@/components/SpecialDeal";
 import WillowPage from "@/components/WillowPage";
 import Footer from "@/components/footer/Footer";
 import { Box } from "@chakra-ui/react";
-import React from "react";
 
-export const HomePage = () => {
+const Homepage = () => {
   return (
     <Box bg="#F8F2EB">
       <Navbar />
@@ -25,3 +24,5 @@ export const HomePage = () => {
     </Box>
   );
 };
+
+export default Homepage;

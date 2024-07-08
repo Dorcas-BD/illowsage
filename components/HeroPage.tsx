@@ -4,7 +4,7 @@ import Image from "next/image";
 const HeroPage = () => {
   return (
     <Flex
-      bg="#F8F2EB"
+      bg={"#F8F2EB"}
       p={8}
       px={{ base: 2, md: 36 }}
       pl={6}

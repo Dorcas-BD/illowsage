@@ -1,5 +1,3 @@
-// components/Navbar.tsx
-
 "use client";
 import {
   Box,
@@ -13,7 +11,7 @@ import {
   Spacer,
 } from "@chakra-ui/react";
 import { HamburgerIcon, CloseIcon } from "@chakra-ui/icons";
-import Link from "next/link";
+import { Link } from "@chakra-ui/next-js";
 import Image from "next/image";
 import { LuHeart, LuSearch, LuShoppingCart, LuUser2 } from "react-icons/lu";
 

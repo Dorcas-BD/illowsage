@@ -12,7 +12,7 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import React from "react";
-import Link from "next/link";
+import { Link } from "@chakra-ui/next-js";
 import { LuStar } from "react-icons/lu";
 
 type Product = {
@@ -179,7 +179,7 @@ const Products: React.FC<ProductsProps> = ({
         >
           {visibleProducts.map((product, index) => (
             <GridItem key={index}>
-              <Link href={`/description`} passHref>
+              <Link href={`/description`}>
                 <Box
                   bg="white"
                   borderRadius="lg"

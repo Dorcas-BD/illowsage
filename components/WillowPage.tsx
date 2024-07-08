@@ -40,7 +40,7 @@ const WillowPage = () => {
           />
         </Box>
       </Box>
-      <Box position={"relative"} top={{ base: 0, md: 5 }}>
+      <Box position={"relative"} top={{ base: 0, md: 12 }}>
         <Image
           src="/img/image6.png"
           alt="Willow Sage"

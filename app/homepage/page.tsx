@@ -6,7 +6,7 @@ import ProductBox from "@/components/ProductBox";
 import SpecialDeal from "@/components/SpecialDeal";
 import WillowPage from "@/components/WillowPage";
 import Footer from "@/components/footer/Footer";
-import { Box, Text } from "@chakra-ui/react";
+import { Box } from "@chakra-ui/react";
 import React from "react";
 
 export const HomePage = () => {

@@ -52,7 +52,7 @@ const Reviews = () => {
   ];
 
   return (
-    <Box p={{ base: 1, md: 4 }} width={"90vw"}>
+    <Box p={{ base: 1, md: 4 }}>
       {reviews.map((review) => (
         <Box key={review.id} mb={8} p={4}>
           <Flex alignItems="center" justifyContent={"space-between"} mb={4}>
@@ -86,15 +86,17 @@ const Reviews = () => {
               </Box>
             </Flex>
             <Box>
-              <Text fontSize="sm" color="gray.500">
+              <Text fontSize="sm" color={"#5F5F5F"}>
                 {review.date}
               </Text>
             </Box>
           </Flex>
-          <Heading size="md" mb={2}>
+          <Heading color={"#4F4F4F"} size="md" mb={2}>
             {review.title}
           </Heading>
-          <Text mb={4}>{review.description}</Text>
+          <Text mb={4} color={"#5F5F5F"}>
+            {review.description}
+          </Text>
           <Flex>
             {review.productImages.map((image, index) => (
               <Image

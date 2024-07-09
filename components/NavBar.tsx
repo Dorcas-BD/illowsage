@@ -67,7 +67,7 @@ const Navbar = () => {
               variant="ghost"
             />
             <IconButton
-              icon={<Box as={LuShoppingCart} boxSize={6} color="#4F4F4F" />}
+              icon={<Box as={LuShoppingCart} boxSize={6} color="#BA2B50" />}
               aria-label="Like"
               variant="ghost"
             />

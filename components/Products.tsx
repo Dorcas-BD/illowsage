@@ -10,11 +10,10 @@ import {
   Image,
   Flex,
   useBreakpointValue,
-  chakra,
 } from "@chakra-ui/react";
 import React from "react";
 import { Link as ChakraLink } from "@chakra-ui/react";
-import { LuStar } from "react-icons/lu";
+import { FaStar } from "react-icons/fa";
 
 export type Product = {
   title: string;
@@ -149,7 +148,7 @@ const Products: React.FC<ProductsProps> = ({
                       </Text>
                       <Flex bg={"#F8E1E7"} p={1} borderRadius="md">
                         <Box
-                          as={LuStar}
+                          as={FaStar}
                           color="#FFC107"
                           position={"relative"}
                           top={1}

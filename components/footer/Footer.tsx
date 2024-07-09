@@ -80,24 +80,28 @@ const Footer = () => {
               aria-label="Facebook"
               variant="ghost"
               _hover={{ bg: "#000000" }}
+              mx={-2}
             />
             <IconButton
               icon={<Box as={LiaInstagram} boxSize={6} color="#4F4F4F" />}
               aria-label="Instagram"
               variant="ghost"
               _hover={{ bg: "#000000" }}
+              mx={-2}
             />
             <IconButton
               icon={<Box as={LiaTwitterSquare} boxSize={6} color="#4F4F4F" />}
               aria-label="Twitter"
               variant="ghost"
               _hover={{ bg: "#000000" }}
+              mx={-2}
             />
             <IconButton
               icon={<Box as={LiaLinkedin} boxSize={6} color="#4F4F4F" />}
               aria-label="LikedIn"
               variant="ghost"
               _hover={{ bg: "#000000", color: "#ffffff" }}
+              mx={-2}
             />
           </HStack>
         </Flex>

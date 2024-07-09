@@ -16,7 +16,7 @@ import {
 import Link from "next/link";
 import Image from "next/image";
 import React, { useState } from "react";
-import { FaHeart } from "react-icons/fa";
+import { FaHeart, FaMinus, FaPlus } from "react-icons/fa";
 import { HiStar } from "react-icons/hi";
 import { LuArrowRight } from "react-icons/lu";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
@@ -26,10 +26,12 @@ const ProductDesc = () => {
   const DescLinks = [
     { name: "Home", path: "/" },
     { name: "EyeCream", path: "#" },
-    { name: "Estee Lauder", path: "#" },
+    { name: "Estee Lauder", path: "#", active: true },
   ];
+
   const [count, setCount] = useState(0);
   const [isWishlisted, setIsWishlisted] = useState(false);
+  const [isReviewsOpen, setIsReviewsOpen] = useState(true);
 
   const increment = () => {
     setCount(count + 1);
@@ -49,7 +51,7 @@ const ProductDesc = () => {
       detailsTile: "Details",
       detailsDesc:
         "The Estée Lauder Advanced Night Repair Eye Supercharged Complex is a powerful eye cream designed to combat multiple signs of aging and fatigue around the delicate eye area. This cream is formulated to reduce the appearance of fine lines, wrinkles, puffiness, and dark circles, providing a brighter, more youthful look.",
-      sizeTitle: "Sizee",
+      sizeTitle: "Size",
       sizeDescW: 'Width: 20 " Height: 1 ½ " Length: 21 ½ "',
       sizeDescWe: "Weight: 0.5 oz",
       sizeDescP: "Package(s): 1",
@@ -65,14 +67,19 @@ const ProductDesc = () => {
   ];
 
   const [isOpen, setIsOpen] = useState(
-    moreItems.map((item, index) => index === 0)
+    moreItems.map((item, index) => index === 0 || index === 2)
   );
 
   const toggleItems = (index: number) => {
     const newOpenState = isOpen.map((state, i) =>
-      i === index ? !state : false
+      i === index ? !state : state
     );
-    setIsOpen(newOpenState);
+
+    const openCount = newOpenState.filter((state) => state).length;
+
+    if (openCount <= 2) {
+      setIsOpen(newOpenState);
+    }
   };
 
   const imageWidth = useBreakpointValue({ base: 224, md: 517 });
@@ -90,23 +97,27 @@ const ProductDesc = () => {
               px={2}
               justifyContent={"center"}
               alignItems={"center"}
+              _hover={{ bg: "#BA2B50", color: "#F8E1E7" }}
+              bg={link.active ? "#BA2B50" : "transparent"}
             >
               <IconButton
                 icon={
                   <Box
                     as={LuArrowRight}
                     boxSize={{ base: 4, md: 6 }}
-                    color="#4F4F4F"
+                    color={link.active ? "#F8E1E7" : "#4F4F4F"}
+                    _hover={{ bg: "#BA2B50", color: "#F8E1E7" }}
                   />
                 }
                 aria-label="Arrow Right"
                 variant="ghost"
-                _hover={{ bg: "#F8F2EB" }}
+                _hover={{ bg: "#BA2B50", color: "#F8E1E7" }}
               />
               <Text
                 fontSize={{ base: "10px", md: "16px" }}
-                color={"#4F4F4F"}
                 ml={-2}
+                color={link.active ? "#F8E1E7" : "#4F4F4F"}
+                _hover={{ color: "#F8E1E7" }}
               >
                 {link.name}
               </Text>
@@ -120,12 +131,14 @@ const ProductDesc = () => {
           flex={1}
           alignItems={{ base: "center", md: "flex-start" }}
         >
-          <Image
-            src="/img/descImg1.png"
-            alt="Description Image 1"
-            width={imageWidth}
-            height={imageHeight}
-          />
+          <Box border={"1px solid #DBDBDB"}>
+            <Image
+              src="/img/descImg1.png"
+              alt="Description Image 1"
+              width={imageWidth}
+              height={imageHeight}
+            />
+          </Box>
           <Box display={{ base: "none", md: "flex" }}>
             <Image
               src="/img/descImg2.png"
@@ -181,29 +194,23 @@ const ProductDesc = () => {
               justifyContent={"center"}
               alignItems={"center"}
             >
-              <Button
+              <IconButton
+                icon={<FaMinus />}
+                size="sm"
                 onClick={decrement}
+                aria-label="Decrement"
                 bg={"#F2E5D7"}
-                fontSize={"lg"}
-                size="sm"
                 _hover={{ bg: "#F2E5D7" }}
-              >
-                -
-              </Button>
-              <Box mx={4}>
-                <Text fontSize="lg" fontWeight="bold">
-                  {count}
-                </Text>
-              </Box>
-              <Button
+              />
+              <Text mx={2}>{count}</Text>
+              <IconButton
+                icon={<FaPlus />}
+                size="sm"
                 onClick={increment}
+                aria-label="Increment"
                 bg={"#F2E5D7"}
-                fontSize={"lg"}
-                size="sm"
                 _hover={{ bg: "#F2E5D7" }}
-              >
-                +
-              </Button>
+              />
             </Flex>
             <Flex
               justifyContent={"center"}
@@ -226,15 +233,17 @@ const ProductDesc = () => {
             </Flex>
           </Flex>
           <Box>
-            <Button
-              bg={"#BA2B50"}
-              w={{ base: "370px", md: "508px" }}
-              py={6}
-              color={"#FFFFFF"}
-              _hover={{ bg: "#F2E5D7" }}
-            >
-              Add to Cart
-            </Button>
+            <Link href="/cart">
+              <Button
+                bg={"#BA2B50"}
+                w={{ base: "370px", md: "508px" }}
+                py={6}
+                color={"#FFFFFF"}
+                _hover={{ bg: "#F2E5D7" }}
+              >
+                Add to Cart
+              </Button>
+            </Link>
           </Box>
 
           <Box mt={12}>
@@ -247,83 +256,83 @@ const ProductDesc = () => {
           </Box>
 
           <Box mt={12}>
-            {moreItems.map((moreItem, index) => {
-              return (
-                <Box key={index} mb={4}>
-                  <Flex
-                    direction={"column"}
-                    p={4}
-                    borderRadius="md"
-                    onClick={() => toggleItems(index)}
-                    cursor="pointer"
-                  >
-                    <Flex justifyContent="space-between" alignItems="center">
-                      <Text fontSize="lg" fontWeight="bold">
-                        {moreItem.title}
-                      </Text>
-                      <IconButton
-                        icon={
-                          isOpen[index] ? (
-                            <ChevronUpIcon />
-                          ) : (
-                            <ChevronDownIcon />
-                          )
-                        }
-                        aria-label="Toggle moreItem"
-                        variant="ghost"
-                        size="sm"
-                      />
-                    </Flex>
-
-                    <Divider
-                      borderWidth="1px"
-                      borderColor="#CBCBCB"
-                      opacity={0.7}
+            {moreItems.map((moreItem, index) => (
+              <Box key={index} mb={4}>
+                <Flex
+                  direction={"column"}
+                  p={4}
+                  borderRadius="md"
+                  onClick={() => toggleItems(index)}
+                  cursor="pointer"
+                >
+                  <Flex justifyContent="space-between" alignItems="center">
+                    <Text fontSize="lg" fontWeight="bold">
+                      {moreItem.title}
+                    </Text>
+                    <IconButton
+                      icon={
+                        isOpen[index] ? <ChevronUpIcon /> : <ChevronDownIcon />
+                      }
+                      aria-label="Toggle moreItem"
+                      variant="ghost"
+                      size="sm"
                     />
                   </Flex>
-                  <Collapse in={isOpen[index]} animateOpacity>
-                    <Box p={4}>
-                      <Text fontWeight={"bold"}>{moreItem.detailsTile}</Text>
-                      <Text>{moreItem.detailsDesc}</Text>
+                  <Divider
+                    borderWidth="1px"
+                    borderColor="#CBCBCB"
+                    opacity={0.7}
+                  />
+                </Flex>
+                <Collapse in={isOpen[index]} animateOpacity>
+                  <Box p={{ base: 1, md: 4 }}>
+                    {index === 2 ? (
+                      <Flex>
+                        <Reviews />
+                      </Flex>
+                    ) : (
+                      <>
+                        <Text fontWeight={"bold"}>{moreItem.detailsTile}</Text>
+                        <Text>{moreItem.detailsDesc}</Text>
 
-                      <Box mt={4}>
-                        <RadioGroup defaultValue="1">
-                          <Flex>
-                            <Radio
-                              bg={"#F2E5D7"}
-                              color={"#000000"}
-                              _hover={{ bg: "#F2E5D7" }}
-                              mr={2}
-                            >
-                              {moreItem.option1}
-                            </Radio>
-                            <Radio
-                              bg={"#F2E5D7"}
-                              color={"#000000"}
-                              _hover={{ bg: "#F2E5D7" }}
-                            >
-                              {moreItem.option2}
-                            </Radio>
-                          </Flex>
-                        </RadioGroup>
-                      </Box>
-                      <Box>
-                        <Text as={"h4"} fontWeight={"bold"} mt={6} mb={2}>
-                          {moreItem.sizeTitle}
-                        </Text>
-                        <Text>{moreItem.sizeDescW}</Text>
-                        <Text>{moreItem.sizeDescWe}</Text>
-                        <Text>{moreItem.sizeDescP}</Text>
-                      </Box>
-                    </Box>
-                  </Collapse>
-                </Box>
-              );
-            })}
+                        <Box mt={4}>
+                          <RadioGroup defaultValue="1">
+                            <Flex>
+                              <Radio
+                                bg={"#F2E5D7"}
+                                color={"#000000"}
+                                _hover={{ bg: "#F2E5D7" }}
+                                mr={2}
+                              >
+                                {moreItem.option1}
+                              </Radio>
+                              <Radio
+                                bg={"#F2E5D7"}
+                                color={"#000000"}
+                                _hover={{ bg: "#F2E5D7" }}
+                              >
+                                {moreItem.option2}
+                              </Radio>
+                            </Flex>
+                          </RadioGroup>
+                        </Box>
+                        <Box>
+                          <Text as={"h4"} fontWeight={"bold"} mt={6} mb={2}>
+                            {moreItem.sizeTitle}
+                          </Text>
+                          <Text>{moreItem.sizeDescW}</Text>
+                          <Text>{moreItem.sizeDescWe}</Text>
+                          <Text>{moreItem.sizeDescP}</Text>
+                        </Box>
+                      </>
+                    )}
+                  </Box>
+                </Collapse>
+              </Box>
+            ))}
           </Box>
         </Flex>
       </Flex>
-      <Reviews />
     </Box>
   );
 };

@@ -10,127 +10,31 @@ import {
   Image,
   Flex,
   useBreakpointValue,
+  chakra,
 } from "@chakra-ui/react";
 import React from "react";
-import { Link } from "@chakra-ui/next-js";
+import { Link as ChakraLink } from "@chakra-ui/react";
 import { LuStar } from "react-icons/lu";
 
-type Product = {
+export type Product = {
   title: string;
   description: string;
   price: string;
   rating: string;
   imageUrl: string;
-  discount: string;
+  discount?: string;
 };
 
 type ProductsProps = {
+  products?: Product[];
   showDiscount?: boolean;
   title?: string;
   subTitle?: string;
   bgColor?: string;
 };
 
-const products: Product[] = [
-  {
-    title: "Advanced Night Repair Eye",
-    description: "Eye Cream",
-    price: "£1,725.00",
-    rating: "(4.5)",
-    imageUrl: "/img/productImage.png",
-    discount: "-20%",
-  },
-  {
-    title: "Advanced Night Repair Eye",
-    description: "Eye Cream",
-    price: "£1,725.00",
-    rating: "(4.5)",
-    imageUrl: "/img/productImage.png",
-    discount: "-20%",
-  },
-  {
-    title: "Advanced Night Repair Eye",
-    description: "Eye Cream",
-    price: "£1,725.00",
-    rating: "(4.5)",
-    imageUrl: "/img/productImage.png",
-    discount: "-20%",
-  },
-  {
-    title: "Advanced Night Repair Eye",
-    description: "Eye Cream",
-    price: "£1,725.00",
-    rating: "(4.5)",
-    imageUrl: "/img/productImage.png",
-    discount: "-20%",
-  },
-  {
-    title: "Advanced Night Repair Eye",
-    description: "Eye Cream",
-    price: "£1,725.00",
-    rating: "(4.5)",
-    imageUrl: "/img/productImage.png",
-    discount: "-20%",
-  },
-  {
-    title: "Advanced Night Repair Eye",
-    description: "Eye Cream",
-    price: "£1,725.00",
-    rating: "(4.5)",
-    imageUrl: "/img/productImage.png",
-    discount: "-20%",
-  },
-  {
-    title: "Advanced Night Repair Eye",
-    description: "Eye Cream",
-    price: "£1,725.00",
-    rating: "(4.5)",
-    imageUrl: "/img/productImage.png",
-    discount: "-20%",
-  },
-  {
-    title: "Advanced Night Repair Eye",
-    description: "Eye Cream",
-    price: "£1,725.00",
-    rating: "(4.5)",
-    imageUrl: "/img/productImage.png",
-    discount: "-20%",
-  },
-  {
-    title: "Advanced Night Repair Eye",
-    description: "Eye Cream",
-    price: "£1,725.00",
-    rating: "(4.5)",
-    imageUrl: "/img/productImage.png",
-    discount: "-20%",
-  },
-  {
-    title: "Advanced Night Repair Eye",
-    description: "Eye Cream",
-    price: "£1,725.00",
-    rating: "(4.5)",
-    imageUrl: "/img/productImage.png",
-    discount: "-20%",
-  },
-  {
-    title: "Advanced Night Repair Eye",
-    description: "Eye Cream",
-    price: "£1,725.00",
-    rating: "(4.5)",
-    imageUrl: "/img/productImage.png",
-    discount: "-20%",
-  },
-  {
-    title: "Advanced Night Repair Eye",
-    description: "Eye Cream",
-    price: "£1,725.00",
-    rating: "(4.5)",
-    imageUrl: "/img/productImage.png",
-    discount: "-20%",
-  },
-];
-
 const Products: React.FC<ProductsProps> = ({
+  products = [],
   showDiscount = false,
   title = "",
   subTitle = "",
@@ -179,7 +83,12 @@ const Products: React.FC<ProductsProps> = ({
         >
           {visibleProducts.map((product, index) => (
             <GridItem key={index}>
-              <Link href={`/description`}>
+              <ChakraLink
+                as="a"
+                href={`/description`}
+                textDecoration="none"
+                _hover={{ textDecoration: "none" }}
+              >
                 <Box
                   bg="white"
                   borderRadius="lg"
@@ -188,7 +97,7 @@ const Products: React.FC<ProductsProps> = ({
                   cursor="pointer"
                   _hover={{ transform: "scale(1.05)", transition: "0.3s" }}
                 >
-                  {showDiscount && (
+                  {product.discount && showDiscount && (
                     <Box
                       position={"absolute"}
                       color="#571426"
@@ -230,7 +139,14 @@ const Products: React.FC<ProductsProps> = ({
                       align={"center"}
                       mt={4}
                     >
-                      <Text fontWeight="bold">{product.price}</Text>
+                      <Text
+                        fontWeight={700}
+                        color={"#571426"}
+                        lineHeight={"22px"}
+                        fontSize={"16px"}
+                      >
+                        {product.price}
+                      </Text>
                       <Flex bg={"#F8E1E7"} p={1} borderRadius="md">
                         <Box
                           as={LuStar}
@@ -243,7 +159,7 @@ const Products: React.FC<ProductsProps> = ({
                     </Flex>
                   </Box>
                 </Box>
-              </Link>
+              </ChakraLink>
             </GridItem>
           ))}
         </Grid>

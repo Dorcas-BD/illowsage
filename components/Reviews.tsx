@@ -52,7 +52,7 @@ const Reviews = () => {
   ];
 
   return (
-    <Box p={4}>
+    <Box p={{ base: 1, md: 4 }} width={"90vw"}>
       {reviews.map((review) => (
         <Box key={review.id} mb={8} p={4}>
           <Flex alignItems="center" justifyContent={"space-between"} mb={4}>

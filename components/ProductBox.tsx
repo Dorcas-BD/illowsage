@@ -1,6 +1,12 @@
 "use client";
 
-import { Box, Flex, Text, keyframes } from "@chakra-ui/react";
+import {
+  Box,
+  Flex,
+  Text,
+  keyframes,
+  useBreakpointValue,
+} from "@chakra-ui/react";
 import React from "react";
 
 const ProductBox = () => {
@@ -8,7 +14,7 @@ const ProductBox = () => {
     "Bodycare",
     "Sunscreen",
     "Lipcare",
-    "Exfolitor",
+    "Exfoliator",
     "Facemask",
     "Moisturizer",
     "Cleaners",
@@ -21,15 +27,15 @@ const ProductBox = () => {
     100% { transform: translateX(-50%); }
   `;
 
+  const animationDuration = useBreakpointValue({ base: "20s", md: "30s" });
+
   const itemWidth = "25%";
 
   return (
     <Box
-      width={{ base: "calc(100% - 2rem)", md: "calc(100% - 8rem)" }}
-      mx={{ base: "1rem", md: "4rem" }}
+      width={"105%"}
       height="61px"
       py={4}
-      px={{ base: 0, md: 4 }}
       borderRadius={12}
       opacity={0.7}
       background="linear-gradient(90deg, #FCF0F3 0%, #DDC3A0)"
@@ -39,10 +45,10 @@ const ProductBox = () => {
     >
       <Flex
         as="div"
-        width="200%"
+        width={{ base: "400%", md: "200%" }}
         justifyContent="space-around"
         alignItems="center"
-        animation={`${scrollingAnimation} 30s linear infinite`}
+        animation={`${scrollingAnimation} ${animationDuration} linear infinite`}
       >
         {[...items, ...items].map((item, index) => (
           <Text
@@ -60,6 +66,24 @@ const ProductBox = () => {
           </Text>
         ))}
       </Flex>
+      <Box
+        position="absolute"
+        top={0}
+        bottom={0}
+        left={0}
+        width="10%"
+        bg="linear-gradient(to right, rgba(252, 240, 243, 1), rgba(252, 240, 243, 0))"
+        pointerEvents="none"
+      />
+      <Box
+        position="absolute"
+        top={0}
+        bottom={0}
+        right={0}
+        width="10%"
+        bg="linear-gradient(to left, rgba(252, 240, 243, 1), rgba(252, 240, 243, 0))"
+        pointerEvents="none"
+      />
     </Box>
   );
 };

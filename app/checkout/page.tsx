@@ -165,7 +165,7 @@ const Checkout = () => {
                 Checkout Details
               </Text>
 
-              <Text>Work in Progress.....My Senior, Mentor</Text>
+              <Text>Work in Progress.....My Senior, Mentors</Text>
             </Box>
           </Flex>
         </Flex>

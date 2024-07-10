@@ -26,7 +26,7 @@ const ImageSlider: React.FC = () => {
 
   return (
     <Box position="relative" width="100%" maxWidth="800px" mx="auto">
-      <Box position="relative" height="400px">
+      <Box position="relative" height="300px">
         <Image
           src={images[currentIndex]}
           alt={`Slide ${currentIndex + 1}`}

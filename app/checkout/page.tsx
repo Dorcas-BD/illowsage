@@ -160,7 +160,13 @@ const Checkout = () => {
               </Flex>
             </VStack>
           </Flex>
-          <Flex flex={1} bg={"#F2E5D7"} justifyContent={"center"} p={4}>
+          <Flex
+            flex={1}
+            bg={"#F2E5D7"}
+            justifyContent={"center"}
+            p={4}
+            mx={{ base: "0.5rem", md: "8rem" }}
+          >
             <Box borderRadius="md" width={{ base: "100%", md: "80%" }}>
               <Text
                 fontSize="26px"

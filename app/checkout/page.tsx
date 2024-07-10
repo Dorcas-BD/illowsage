@@ -164,6 +164,8 @@ const Checkout = () => {
               <Text fontSize="lg" mb={4}>
                 Checkout Details
               </Text>
+
+              <Text>Work in Progress.....My Senior, Mentor</Text>
             </Box>
           </Flex>
         </Flex>

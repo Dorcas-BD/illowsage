@@ -1,5 +1,6 @@
 "use client";
 import Footer from "@/components/footer/Footer";
+import ImageSlider from "@/components/ImageSlider";
 import Navbar from "@/components/NavBar";
 import {
   Box,
@@ -14,7 +15,7 @@ import {
   FormControl,
   FormLabel,
   Input,
-  Textarea,
+  Divider,
   IconButton,
 } from "@chakra-ui/react";
 import Link from "next/link";
@@ -34,7 +35,7 @@ const Checkout = () => {
       <Navbar />
 
       <Box bg={"#F8F2EB"} px={{ base: 4, md: 36 }} py={8}>
-        <Flex justifyContent={{ base: "center", md: "flex-start" }} mb={16}>
+        <Flex justifyContent={{ base: "center", md: "flex-start" }} mb={8}>
           {CheckoutLinks.map((link, index) => (
             <Link href={link.path} key={index}>
               <Flex
@@ -72,7 +73,7 @@ const Checkout = () => {
             </Link>
           ))}
         </Flex>
-        <Flex>
+        <Flex direction={{ base: "column-reverse", md: "row" }}>
           <Flex flex={1}>
             <VStack spacing={6} align="stretch">
               <FormControl>
@@ -136,13 +137,13 @@ const Checkout = () => {
                 </Box>
               )}
 
-              <Flex gap={8}>
+              <Flex gap={{ base: 6, md: 8 }}>
                 <Button
                   bg={"#BA2B50"}
                   color={"#FAFAFA"}
                   size="lg"
                   mt={6}
-                  px={32}
+                  px={{ base: 16, md: 32 }}
                 >
                   Pay Now
                 </Button>
@@ -150,7 +151,7 @@ const Checkout = () => {
                   color={"#4F4F4F"}
                   bg={"#F8F2EB"}
                   shadow={"lg"}
-                  px={20}
+                  px={{ base: 14, md: 20 }}
                   size="lg"
                   mt={6}
                 >
@@ -159,13 +160,47 @@ const Checkout = () => {
               </Flex>
             </VStack>
           </Flex>
-          <Flex flex={1}>
-            <Box borderRadius="md">
-              <Text fontSize="lg" mb={4}>
-                Checkout Details
+          <Flex flex={1} bg={"#F2E5D7"} justifyContent={"center"} p={4}>
+            <Box borderRadius="md" width={{ base: "100%", md: "80%" }}>
+              <Text
+                fontSize="26px"
+                mb={4}
+                textAlign={"center"}
+                color={"#4F4F4F"}
+                lineHeight={"32px"}
+                fontWeight={500}
+              >
+                Confirm Order Details
               </Text>
-
-              <Text>Work in Progress.....My Senior, Mentors</Text>
+              <Box mb={4}>
+                <ImageSlider />
+              </Box>
+              <Box>
+                <Flex justifyContent={"space-between"} pb={2} mt={8}>
+                  <Text fontWeight={400} color={"#8D8D8D"}>
+                    Subtotal
+                  </Text>
+                  <Text fontWeight="bold">£250.00</Text>
+                </Flex>
+                <Flex justifyContent={"space-between"}>
+                  <Text fontWeight={400} color={"#8D8D8D"}>
+                    Shipping
+                  </Text>
+                  <Text fontWeight={700} color={"#161D25"}>
+                    £10.00
+                  </Text>
+                </Flex>
+                <Divider
+                  mt={2}
+                  borderWidth="1px"
+                  borderColor="#CBCBCB"
+                  opacity={0.7}
+                />
+                <Flex justifyContent={"space-between"}>
+                  <Text fontWeight="bold">Total</Text>
+                  <Text fontWeight="bold">£265.00</Text>
+                </Flex>
+              </Box>
             </Box>
           </Flex>
         </Flex>

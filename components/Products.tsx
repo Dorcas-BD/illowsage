@@ -12,22 +12,23 @@ import {
   useBreakpointValue,
 } from "@chakra-ui/react";
 import React from "react";
-import { Link as ChakraLink } from "@chakra-ui/react";
+import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 
 export type Product = {
-  title: string;
+  id: string;
+  name: string;
   description: string;
-  price: string;
+  selling_price: string;
   rating: string;
-  imageUrl: string;
+  product_image: string;
   discount?: string;
 };
 
 type ProductsProps = {
   products?: Product[];
   showDiscount?: boolean;
-  title?: string;
+  pageTitle?: string;
   subTitle?: string;
   bgColor?: string;
 };
@@ -35,16 +36,10 @@ type ProductsProps = {
 const Products: React.FC<ProductsProps> = ({
   products = [],
   showDiscount = false,
-  title = "",
+  pageTitle = "",
   subTitle = "",
   bgColor = "#FCF0F3",
 }) => {
-  const visibleProducts =
-    useBreakpointValue({
-      base: products.slice(0, 6),
-      md: products.slice(0, 12),
-    }) || products.slice(0, 6);
-
   return (
     <Box>
       <Box
@@ -62,7 +57,7 @@ const Products: React.FC<ProductsProps> = ({
             fontWeight={700}
             lineHeight="43px"
           >
-            {title}
+            {pageTitle}
           </Heading>
           <Text
             fontSize="lg"
@@ -80,15 +75,11 @@ const Products: React.FC<ProductsProps> = ({
           templateColumns={{ base: "repeat(2, 1fr)", md: "repeat(4, 1fr)" }}
           gap={4}
         >
-          {visibleProducts.map((product, index) => (
-            <GridItem key={index}>
-              <ChakraLink
-                as="a"
-                href={`/description`}
-                textDecoration="none"
-                _hover={{ textDecoration: "none" }}
-              >
+          {products.map((product) => (
+            <GridItem key={product.id}>
+              <Link href={`/description/${product.id}`} passHref>
                 <Box
+                  as="a"
                   bg="white"
                   borderRadius="lg"
                   boxShadow="md"
@@ -111,7 +102,10 @@ const Products: React.FC<ProductsProps> = ({
                   )}
 
                   <Box bg="#F8F2EB" display={"flex"} justifyContent={"center"}>
-                    <Image src={product.imageUrl} alt={product.title} />
+                    <Image
+                      src={`https://api.timbu.cloud/images/${product.product_image}`}
+                      alt={product.name}
+                    />
                   </Box>
                   <Box p={4}>
                     <Text
@@ -130,7 +124,7 @@ const Products: React.FC<ProductsProps> = ({
                       fontWeight={600}
                       lineHeight={"19px"}
                     >
-                      {product.title}
+                      {product.name}
                     </Heading>
                     <Flex
                       direction={"row"}
@@ -144,7 +138,7 @@ const Products: React.FC<ProductsProps> = ({
                         lineHeight={"22px"}
                         fontSize={"16px"}
                       >
-                        {product.price}
+                        {product.selling_price}
                       </Text>
                       <Flex bg={"#F8E1E7"} p={1} borderRadius="md">
                         <Box
@@ -158,7 +152,7 @@ const Products: React.FC<ProductsProps> = ({
                     </Flex>
                   </Box>
                 </Box>
-              </ChakraLink>
+              </Link>
             </GridItem>
           ))}
         </Grid>

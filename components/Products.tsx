@@ -149,7 +149,7 @@ const Products: React.FC<ProductsProps> = ({
                           position={"relative"}
                           top={1}
                         />
-                        <Text color={"#781C34"}>{product.rating}</Text>
+                        <Text color={"#781C34"}>4.5{product.rating}</Text>
                       </Flex>
                     </Flex>
                   </Box>

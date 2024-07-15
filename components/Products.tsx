@@ -21,6 +21,8 @@ export type Product = {
   description: string;
   selling_price: string;
   rating: string;
+  photos: { url: string }[];
+  price: string;
   product_image: string;
   discount?: string;
 };
@@ -103,7 +105,7 @@ const Products: React.FC<ProductsProps> = ({
 
                   <Box bg="#F8F2EB" display={"flex"} justifyContent={"center"}>
                     <Image
-                      src={`https://api.timbu.cloud/images/${product.product_image}`}
+                      src={`https://api.timbu.cloud/images/${product.photos[0]?.url}`}
                       alt={product.name}
                     />
                   </Box>
@@ -138,7 +140,7 @@ const Products: React.FC<ProductsProps> = ({
                         lineHeight={"22px"}
                         fontSize={"16px"}
                       >
-                        {product.selling_price}
+                        {product.price}
                       </Text>
                       <Flex bg={"#F8E1E7"} p={1} borderRadius="md">
                         <Box

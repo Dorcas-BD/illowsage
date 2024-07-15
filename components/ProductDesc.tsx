@@ -15,23 +15,61 @@ import {
 } from "@chakra-ui/react";
 import Link from "next/link";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaHeart, FaMinus, FaPlus } from "react-icons/fa";
 import { HiStar } from "react-icons/hi";
 import { LuArrowRight } from "react-icons/lu";
 import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import Reviews from "./Reviews";
+import { useParams } from "next/navigation";
+import getProducts from "@/app/action";
+
+interface Product {
+  id: string;
+  name: string;
+  description: string;
+  selling_price: string;
+  rating: string;
+  product_image: string;
+  discount?: string;
+  photos: { url: string }[];
+}
+
+const DescLinks = [
+  { name: "Home", path: "/" },
+  { name: "Estee Lauder", path: "#", active: true },
+  { name: "Cart", path: "/cart" },
+];
+
+const moreItems = [
+  {
+    title: "Additional Info",
+    detailsTile: "Details",
+    detailsDesc:
+      "The Estée Lauder Advanced Night Repair Eye Supercharged Complex is a powerful eye cream designed to combat multiple signs of aging and fatigue around the delicate eye area. This cream is formulated to reduce the appearance of fine lines, wrinkles, puffiness, and dark circles, providing a brighter, more youthful look.",
+    sizeTitle: "Size",
+    sizeDescW: 'Width: 20 " Height: 1 ½ " Length: 21 ½ "',
+    sizeDescWe: "Weight: 0.5 oz",
+    sizeDescP: "Package(s): 1",
+    option1: "15ML",
+    option2: "50ML",
+  },
+  {
+    title: "Questions",
+  },
+  {
+    title: "Reviews (21)",
+  },
+];
 
 const ProductDesc = () => {
-  const DescLinks = [
-    { name: "Home", path: "/" },
-    { name: "EyeCream", path: "#" },
-    { name: "Estee Lauder", path: "#", active: true },
-  ];
-
   const [count, setCount] = useState(0);
   const [isWishlisted, setIsWishlisted] = useState(false);
-  const [isReviewsOpen, setIsReviewsOpen] = useState(true);
+  const { id } = useParams<{ id: string }>();
+  const [product, setProduct] = useState<Product | null>(null);
+  const [isOpen, setIsOpen] = useState<boolean[]>(() =>
+    moreItems.map((item, index) => index === 0 || index === 2)
+  );
 
   const increment = () => {
     setCount(count + 1);
@@ -45,30 +83,19 @@ const ProductDesc = () => {
     setIsWishlisted(!isWishlisted);
   };
 
-  const moreItems = [
-    {
-      title: "Additional Info",
-      detailsTile: "Details",
-      detailsDesc:
-        "The Estée Lauder Advanced Night Repair Eye Supercharged Complex is a powerful eye cream designed to combat multiple signs of aging and fatigue around the delicate eye area. This cream is formulated to reduce the appearance of fine lines, wrinkles, puffiness, and dark circles, providing a brighter, more youthful look.",
-      sizeTitle: "Size",
-      sizeDescW: 'Width: 20 " Height: 1 ½ " Length: 21 ½ "',
-      sizeDescWe: "Weight: 0.5 oz",
-      sizeDescP: "Package(s): 1",
-      option1: "15ML",
-      option2: "50ML",
-    },
-    {
-      title: "Questions",
-    },
-    {
-      title: "Reviews (21)",
-    },
-  ];
+  useEffect(() => {
+    const fetchProduct = async () => {
+      const allProducts = await getProducts();
+      const foundProduct = allProducts.products?.find(
+        (item: Product) => item.id === id
+      );
+      setProduct(foundProduct || null);
+    };
 
-  const [isOpen, setIsOpen] = useState(
-    moreItems.map((item, index) => index === 0 || index === 2)
-  );
+    fetchProduct();
+  }, [id]);
+
+  if (!product) return <div>Loading product...</div>;
 
   const toggleItems = (index: number) => {
     const newOpenState = isOpen.map((state, i) =>
@@ -82,8 +109,8 @@ const ProductDesc = () => {
     }
   };
 
-  const imageWidth = useBreakpointValue({ base: 224, md: 517 });
-  const imageHeight = useBreakpointValue({ base: 352, md: 705 });
+  // const imageWidth = ;
+  // const imageHeight = ;
 
   return (
     <Box bg={"#F8F2EB"} px={{ base: 4, md: 36 }} pt={4}>
@@ -133,16 +160,16 @@ const ProductDesc = () => {
         >
           <Box border={"1px solid #DBDBDB"}>
             <Image
-              src="/img/descImg1.png"
-              alt="Description Image 1"
-              width={imageWidth}
-              height={imageHeight}
+              src={`https://api.timbu.cloud/images/${product.photos[0]?.url}`}
+              alt={product.name}
+              width={517}
+              height={705}
             />
           </Box>
           <Box display={{ base: "none", md: "flex" }}>
             <Image
-              src="/img/descImg2.png"
-              alt="Description Image 2"
+              src={`https://api.timbu.cloud/images/${product.photos[1]?.url}`}
+              alt={product.name}
               width={517}
               height={359}
             />
@@ -164,25 +191,28 @@ const ProductDesc = () => {
                   />
                 </Box>
               ))}
-            <Text ml={2}>21 Reviews</Text>
+            <Text ml={2}>{product.rating} Reviews</Text>
           </Flex>
           <Box>
             <Heading mb={6} fontSize={{ base: "20px", md: "25px" }}>
-              Estée Lauder Advanced Night Repair Eye Supercharged Complex
+              {product.name}
             </Heading>
             <Text
               mb={6}
               fontSize={"16px"}
               display={{ base: "none", md: "flex" }}
             >
-              Lightweight gel-cream that absorbs quickly without leaving a
-              greasy residue.
+              {product.description}
             </Text>
             <Text mb={6}>
               <Text as="span" fontWeight="bold">
-                £25.00
-              </Text>{" "}
-              <Text as="s">£27.00</Text>
+                {product.selling_price}
+              </Text>
+              {product.discount && (
+                <Text as="s" ml={2}>
+                  {product.discount}
+                </Text>
+              )}
             </Text>
           </Box>
           <Flex gap={{ base: 4, md: 8 }} mb={8}>

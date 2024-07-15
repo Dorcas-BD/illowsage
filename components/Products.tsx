@@ -109,7 +109,7 @@ const Products: React.FC<ProductsProps> = ({
                       alt={product.name}
                     />
                   </Box>
-                  <Box p={4}>
+                  <Box p={4} bg={"#FFFAFA"}>
                     <Text
                       color={"#5F5F5F"}
                       fontSize={"12px"}

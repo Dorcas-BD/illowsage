@@ -2,6 +2,7 @@
 import Footer from "@/components/footer/Footer";
 import ImageSlider from "@/components/ImageSlider";
 import Navbar from "@/components/NavBar";
+import { useCart } from "@/lib/providers/CartContext";
 import {
   Box,
   Button,
@@ -29,6 +30,15 @@ const Checkout = () => {
     { name: "Checkout", path: "#", active: true },
   ];
   const [paymentMethod, setPaymentMethod] = useState("card");
+
+  const { cartItems } = useCart();
+
+  const subtotal = cartItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+  const shippingFee = 5;
+  const finalTotal = subtotal + shippingFee;
 
   return (
     <Box>
@@ -179,21 +189,21 @@ const Checkout = () => {
                 Confirm Order Details
               </Text>
               <Box mb={4}>
-                <ImageSlider />
+                <ImageSlider images={cartItems.map((item) => item.product)} />
               </Box>
               <Box>
                 <Flex justifyContent={"space-between"} pb={2} mt={8}>
                   <Text fontWeight={400} color={"#8D8D8D"}>
                     Subtotal
                   </Text>
-                  <Text fontWeight="bold">£250.00</Text>
+                  <Text fontWeight="bold">£{subtotal.toFixed(2)}</Text>
                 </Flex>
                 <Flex justifyContent={"space-between"}>
                   <Text fontWeight={400} color={"#8D8D8D"}>
                     Shipping
                   </Text>
                   <Text fontWeight={700} color={"#161D25"}>
-                    £10.00
+                    £{shippingFee.toFixed(2)}
                   </Text>
                 </Flex>
                 <Divider
@@ -204,7 +214,7 @@ const Checkout = () => {
                 />
                 <Flex justifyContent={"space-between"}>
                   <Text fontWeight="bold">Total</Text>
-                  <Text fontWeight="bold">£265.00</Text>
+                  <Text fontWeight="bold">£{finalTotal.toFixed(2)}</Text>
                 </Flex>
               </Box>
             </Box>

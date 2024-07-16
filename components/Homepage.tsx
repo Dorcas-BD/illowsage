@@ -18,7 +18,7 @@ const Homepage = () => {
       <HeroPage />
       <FanProducts />
       <WillowPage />
-      {/* <SpecialDeal /> */}
+      <SpecialDeal />
 
       <Blog />
       <Footer />

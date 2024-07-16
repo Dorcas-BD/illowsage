@@ -23,12 +23,17 @@ import { ChevronDownIcon, ChevronUpIcon } from "@chakra-ui/icons";
 import Reviews from "./Reviews";
 import { useParams } from "next/navigation";
 import getProducts from "@/app/action";
+import { useCart } from "@/lib/providers/CartContext";
+
+interface Price {
+  GBP: [number, number | null, any[]];
+}
 
 interface Product {
   id: string;
   name: string;
   description: string;
-  selling_price: string;
+  current_price: Price[];
   rating: string;
   product_image: string;
   discount?: string;
@@ -106,6 +111,21 @@ const ProductDesc = () => {
 
     if (openCount <= 2) {
       setIsOpen(newOpenState);
+    }
+  };
+
+  const { addToCart } = useCart();
+  const handleAddToCart = () => {
+    if (product) {
+      addToCart({
+        id: product.id,
+        product: `https://api.timbu.cloud/images/${product.photos[0]?.url}`,
+        details: product.name,
+        subDetails: "15ML",
+        status: "In Stock",
+        price: parseFloat(product.current_price[0].GBP[0].toFixed(2)),
+        quantity: 1,
+      });
     }
   };
 
@@ -206,7 +226,8 @@ const ProductDesc = () => {
             </Text>
             <Text mb={6}>
               <Text as="span" fontWeight="bold">
-                {product.selling_price}
+                £{product.current_price[0].GBP[0]}
+                .00
               </Text>
               {product.discount && (
                 <Text as="s" ml={2}>
@@ -265,6 +286,7 @@ const ProductDesc = () => {
           <Box>
             <Link href="/cart">
               <Button
+                onClick={handleAddToCart}
                 bg={"#BA2B50"}
                 w={{ base: "370px", md: "508px" }}
                 py={6}

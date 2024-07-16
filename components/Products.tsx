@@ -15,14 +15,17 @@ import React from "react";
 import Link from "next/link";
 import { FaStar } from "react-icons/fa";
 
+interface Price {
+  GBP: [number, number | null, any[]];
+}
+
 export type Product = {
   id: string;
   name: string;
   description: string;
-  selling_price: string;
   rating: string;
   photos: { url: string }[];
-  price: string;
+  current_price: Price[];
   product_image: string;
   discount?: string;
 };
@@ -140,7 +143,11 @@ const Products: React.FC<ProductsProps> = ({
                         lineHeight={"22px"}
                         fontSize={"16px"}
                       >
-                        {product.price}
+                        £
+                        {product.current_price[0].GBP
+                          ? product.current_price[0].GBP[0]
+                          : 40}
+                        .00
                       </Text>
                       <Flex bg={"#F8E1E7"} p={1} borderRadius="md">
                         <Box

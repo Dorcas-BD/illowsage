@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Products, { Product } from "./Products";
+import Products from "./Products";
 import { Box } from "@chakra-ui/react";
 import getProducts from "@/app/action";
 
@@ -28,7 +28,7 @@ const SpecialDeal = () => {
   return (
     <Box mt={12} mx={6}>
       <Products
-        products={Products}
+        products={products}
         showDiscount={true}
         pageTitle="Glow Up Today - Special Deals!"
         subTitle="Glow Getters! Don't Miss Our Best-Selling Skincare Deals!"

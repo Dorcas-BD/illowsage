@@ -2,13 +2,14 @@ import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { Box, Flex, Radio, RadioGroup } from "@chakra-ui/react";
 
-const ImageSlider: React.FC = () => {
-  const images = [
-    "/img/cartImg.png",
-    "/img/product/fan12.png",
-    "/img/cartImg.png",
-    "/img/product/fan12.png",
-  ];
+interface ImageSliderProps {
+  images: string[];
+}
+
+const ImageSlider: React.FC<ImageSliderProps> = ({ images }) => {
+  if (!images || images.length === 0) {
+    return null;
+  }
 
   const [currentIndex, setCurrentIndex] = useState<number>(0);
 

@@ -1,5 +1,4 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import {
   Box,
   Flex,
@@ -14,75 +13,37 @@ import {
   Divider,
   useBreakpointValue,
 } from "@chakra-ui/react";
-import { FaMinus, FaPlus, FaRegTrashAlt, FaTrash } from "react-icons/fa";
+import { FaMinus, FaPlus, FaRegTrashAlt } from "react-icons/fa";
 import Image from "next/image";
+import { useCart } from "@/lib/providers/CartContext";
+
+type CartItem = {
+  id: string;
+  product: string;
+  details: string;
+  subDetails: string;
+  status: string;
+  price: number;
+  quantity: number;
+};
 
 const CartTable = () => {
-  const [cartItems, setCartItems] = useState([
-    {
-      id: 1,
-      product: "/img/cartImg.png",
-      details: "Estée Lauder",
-      subDetails: "15ML",
-      status: "In Stock",
-      price: 25,
-      quantity: 1,
-    },
-    {
-      id: 2,
-      product: "/img/cartImg.png",
-      details: "Estée Lauder",
-      subDetails: "15ML",
-      status: "Out of Stock",
-      price: 25,
-      quantity: 2,
-    },
-    {
-      id: 3,
-      product: "/img/cartImg.png",
-      details: "Estée Lauder",
-      subDetails: "15ML",
-      status: "In Stock",
-      price: 25,
-      quantity: 1,
-    },
-  ]);
-
-  const incrementQuantity = (index: number) => {
-    const newCartItems = [...cartItems];
-    newCartItems[index].quantity += 1;
-    setCartItems(newCartItems);
-  };
-
-  const decrementQuantity = (index: number) => {
-    const newCartItems = [...cartItems];
-    if (newCartItems[index].quantity > 0) {
-      newCartItems[index].quantity -= 1;
-    }
-    setCartItems(newCartItems);
-  };
-
-  const deleteItem = (index: number) => {
-    const newCartItems = [...cartItems];
-    newCartItems.splice(index, 1);
-    setCartItems(newCartItems);
-  };
+  const { cartItems, incrementQuantity, decrementQuantity, deleteItem } =
+    useCart();
 
   const subtotal = cartItems.reduce(
-    (acc, item) => acc + item.price * item.quantity,
+    (acc: number, item: CartItem) => acc + item.price * item.quantity,
     0
   );
 
   const shippingFee = 5;
-
   const finalTotal = subtotal + shippingFee;
-
   const isSmallScreen = useBreakpointValue({ base: true, md: false });
 
   return (
     <Box overflowX="hidden" mx={{ base: 2, md: 36 }} py={12}>
       {isSmallScreen ? (
-        cartItems.map((item, index) => (
+        cartItems.map((item, index: number) => (
           <Flex
             key={item.id}
             direction="column"
@@ -108,7 +69,7 @@ const CartTable = () => {
                 <Text mb={2} color={"#8D8D8D"}>
                   {item.subDetails}
                 </Text>
-                <Text mb={2}> {item.status}</Text>
+                <Text mb={2}>{item.status}</Text>
                 <Text mb={2}>£{item.price.toFixed(2)}</Text>
                 <Flex>
                   <Flex
@@ -123,7 +84,7 @@ const CartTable = () => {
                     <IconButton
                       icon={<FaMinus />}
                       size="xs"
-                      onClick={() => decrementQuantity(index)}
+                      onClick={() => decrementQuantity(item.id)}
                       aria-label="Decrement"
                       bg={"#E99FB2"}
                       borderRadius={6}
@@ -134,7 +95,7 @@ const CartTable = () => {
                     <IconButton
                       icon={<FaPlus />}
                       size="xs"
-                      onClick={() => incrementQuantity(index)}
+                      onClick={() => incrementQuantity(item.id)}
                       aria-label="Increment"
                       bg={"#E99FB2"}
                       color={"#FFFAFA"}
@@ -145,7 +106,7 @@ const CartTable = () => {
                   <IconButton
                     icon={<Box as={FaRegTrashAlt} boxSize={7} />}
                     size="sm"
-                    onClick={() => deleteItem(index)}
+                    onClick={() => deleteItem(item.id)}
                     aria-label="Delete"
                     color={"#BCBCBC"}
                     mt={2}
@@ -192,23 +153,27 @@ const CartTable = () => {
                   </Text>
                   <Text color={"#8D8D8D"}>{item.subDetails}</Text>
                 </Td>
-                <Td>{item.status}</Td>
-                <Td>£{item.price.toFixed(2)}</Td>
+                <Td>
+                  <Text>{item.status}</Text>
+                </Td>
+                <Td>
+                  <Text>£{item.price.toFixed(2)}</Text>
+                </Td>
                 <Td>
                   <Flex
                     alignItems="center"
                     justify={"center"}
-                    py={4}
+                    py={2}
                     bg={"#F8E1E7"}
                     borderRadius={"8px"}
                   >
                     <IconButton
                       icon={<FaMinus />}
                       size="xs"
-                      onClick={() => decrementQuantity(index)}
+                      onClick={() => decrementQuantity(item.id)}
                       aria-label="Decrement"
                       bg={"#E99FB2"}
-                      borderRadius={4}
+                      borderRadius={6}
                       color={"#FFFAFA"}
                       _hover={{ bg: "#E99FB2" }}
                     />
@@ -216,17 +181,30 @@ const CartTable = () => {
                     <IconButton
                       icon={<FaPlus />}
                       size="xs"
-                      onClick={() => incrementQuantity(index)}
+                      onClick={() => incrementQuantity(item.id)}
                       aria-label="Increment"
                       bg={"#E99FB2"}
                       color={"#FFFAFA"}
-                      borderRadius={4}
+                      borderRadius={6}
                       _hover={{ bg: "#E99FB2" }}
                     />
                   </Flex>
+                  <IconButton
+                    icon={<Box as={FaRegTrashAlt} boxSize={7} />}
+                    size="sm"
+                    onClick={() => deleteItem(item.id)}
+                    aria-label="Delete"
+                    color={"#BCBCBC"}
+                    mt={2}
+                    ml={2}
+                    borderRadius={6}
+                    _hover={{ bg: "#BCBCBC" }}
+                  />
                 </Td>
-                <Td color={"#4F4F4F"}>
-                  £{(item.price * item.quantity).toFixed(2)}
+                <Td>
+                  <Text fontWeight="bold">
+                    £{(item.price * item.quantity).toFixed(2)}
+                  </Text>
                 </Td>
               </Tr>
             ))}

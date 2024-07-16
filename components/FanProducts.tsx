@@ -3,7 +3,7 @@
 import { Box } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ProductBox from "./ProductBox";
-import Products, { Product } from "./Products";
+import Products from "./Products";
 import getProducts from "@/app/action";
 
 const FanProducts = () => {

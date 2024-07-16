@@ -1,10 +1,11 @@
 "use client";
 
-import { Box } from "@chakra-ui/react";
+import { Box, Center, Spinner } from "@chakra-ui/react";
 import React, { useEffect, useState } from "react";
 import ProductBox from "./ProductBox";
 import Products from "./Products";
 import getProducts from "@/app/action";
+import Image from "next/image";
 
 const FanProducts = () => {
   const [products, setProducts] = useState<any[]>([]);
@@ -28,15 +29,23 @@ const FanProducts = () => {
 
   return (
     <Box>
-      <Box display={{ base: "none", md: "flex" }} pt={6}>
-        <ProductBox />
-      </Box>
-      <Products
-        products={products}
-        pageTitle="Fans Products"
-        subTitle="Check our best seller products on Willow website right now"
-        showDiscount={true}
-      />
+      {loading ? (
+        <Center h="50vh">
+          <Image src="/loading.gif" alt="loading" width={300} height={300} />
+        </Center>
+      ) : (
+        <>
+          <Box display={{ base: "none", md: "flex" }} pt={6}>
+            <ProductBox />
+          </Box>
+          <Products
+            products={products}
+            pageTitle="Fans Products"
+            subTitle="Check our best seller products on Willow website right now"
+            showDiscount={true}
+          />
+        </>
+      )}
     </Box>
   );
 };

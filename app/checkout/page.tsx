@@ -40,6 +40,10 @@ const Checkout = () => {
   const shippingFee = 5;
   const finalTotal = subtotal + shippingFee;
 
+  const handleCheckout = () => {
+    alert("Order placed successfully");
+  };
+
   return (
     <Box>
       <Navbar />
@@ -148,15 +152,18 @@ const Checkout = () => {
               )}
 
               <Flex gap={{ base: 6, md: 8 }}>
-                <Button
-                  bg={"#BA2B50"}
-                  color={"#FAFAFA"}
-                  size="lg"
-                  mt={6}
-                  px={{ base: 16, md: 32 }}
-                >
-                  Pay Now
-                </Button>
+                <Link href="/confirm">
+                  <Button
+                    bg={"#BA2B50"}
+                    color={"#FAFAFA"}
+                    size="lg"
+                    mt={6}
+                    px={{ base: 16, md: 32 }}
+                    onClick={handleCheckout}
+                  >
+                    Pay Now
+                  </Button>
+                </Link>
                 <Button
                   color={"#4F4F4F"}
                   bg={"#F8F2EB"}

@@ -129,9 +129,6 @@ const ProductDesc = () => {
     }
   };
 
-  // const imageWidth = ;
-  // const imageHeight = ;
-
   return (
     <Box bg={"#F8F2EB"} px={{ base: 4, md: 36 }} pt={4}>
       <Flex justifyContent={{ base: "center", md: "flex-start" }} mb={8}>
